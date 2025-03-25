@@ -66,23 +66,29 @@ const addCategory = async (req, res) => {
 
 const getCategoryById = async (req, res) => {
   try {
-    const id = req.params.id;
+    const { id } = req.params;
     if (!isValidObjectId(id)) {
-      return res.status(404).send({
-        message: "Category with given ID not found!",
+      return res.status(400).json({
+        message: "Invalid category ID format!",
       });
     }
 
     const category = await categoryModel.findById(id);
 
-    res.status(200).send({
+    if (!category) {
+      return res.status(404).json({
+        success: false,
+        message: "Category with given ID not found!",
+      });
+    }
+    res.status(200).json({
       message: "Success",
       data: category,
     });
   } catch (error) {
-    console.log(error.message);
-    res.status(500).send({
-      message: "Error while get category with given ID",
+    console.error(error.message);
+    res.status(500).json({
+      message: "Error while getting category by ID",
     });
   }
 };
@@ -96,7 +102,12 @@ const deleteCategory = async (req, res) => {
         message: "Category with given ID not found!",
       });
     }
-
+    const category = await categoryModel.findByIdAndDelete(id);
+    if (!category) {
+      return res.status(404).json({
+        message: "Category with given ID not found!",
+      });
+    }
     await categoryModel.findByIdAndDelete(id);
     res.status(204).send();
   } catch (error) {
@@ -120,6 +131,12 @@ const updateCategory = async (req, res) => {
     if (!name) {
       return res.status(400).send({
         message: "Request not completed!",
+      });
+    }
+    const founded = await categoryModel.findOne({ name });
+    if (founded) {
+      return res.status(409).send({
+        message: "This category already exists!",
       });
     }
 

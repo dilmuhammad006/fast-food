@@ -47,6 +47,7 @@
 - id
 - name
 - email
+- phone_number
 - imgUrl
 - created_at
 - updated_at

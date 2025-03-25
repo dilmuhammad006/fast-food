@@ -1,5 +1,9 @@
 import app from "./app.js";
+import { APP_PORT } from "./config/app.config.js";
+import connectDb from "./config/mongo.config.js";
 
-app.listen(3000, () => {
-  console.log(`http://localhost:3000`);
+await connectDb();
+
+app.listen(APP_PORT, () => {
+  console.log(`http://localhost:${APP_PORT}`);
 });

@@ -1,7 +1,7 @@
 import { isValidObjectId } from "mongoose";
 import categoryModel from "../models/category.model.js";
 
-const getAllCategory = async (req, res) => {
+const getAllCategory   = async (req, res) => {
   try {
     let { limit = 10, page = 1, sort = "asc" } = req.query;
 
@@ -31,7 +31,7 @@ const getAllCategory = async (req, res) => {
   }
 };
 
-const addCategory = async (req, res) => {
+const addCategory      = async (req, res) => {
   try {
     const { name } = req.body;
 
@@ -64,7 +64,7 @@ const addCategory = async (req, res) => {
   }
 };
 
-const getCategoryById = async (req, res) => {
+const getCategoryById  = async (req, res) => {
   try {
     const { id } = req.params;
     if (!isValidObjectId(id)) {
@@ -93,7 +93,7 @@ const getCategoryById = async (req, res) => {
   }
 };
 
-const deleteCategory = async (req, res) => {
+const deleteCategory   = async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -118,7 +118,7 @@ const deleteCategory = async (req, res) => {
   }
 };
 
-const updateCategory = async (req, res) => {
+const updateCategory   = async (req, res) => {
   try {
     const id = req.params.id;
 
